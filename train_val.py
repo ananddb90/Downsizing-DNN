@@ -8,17 +8,18 @@ val_label = {}
 gt_label = {}
 
 def create_gt():
-  f = open(root + 'train/labels.txt', 'r')
-  c = 0
-  for c in ( raw.strip().split() for raw in f):
-    gt_label[c[0]]  = c
-    c+=1
+  count = 0
+  with open('/imagenet/2011/train/labels.txt') as f:
+    line = f.readlines()
   
-  f.close()
-  f = open(os.path.join(root, "gtlabel.txt"), 'wb')
+  for i in range(len(line)):
+    gt_label[line[i][0:-2]] = count
+    count = count + 1
+    
+  f1 = open(os.path.join(root, "gtlabel.txt"), 'wb')
   for i in gt_label:
-    f.write(i + '\n')
-  f.close()
+    f1.write(i + 't' + gt_label[i] + '\n')
+  f1.close()
   
 def create_train():
 
